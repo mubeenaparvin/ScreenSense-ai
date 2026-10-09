@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Prediction Result</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f7fc;
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    /* Header */
+
+    .header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .header h1 {
+        color: #1e3a8a;
+        font-size: 34px;
+        margin-bottom: 10px;
+    }
+
+    .header p {
+        color: #64748b;
+        font-size: 16px;
+    }
+
+
+    /* Result Card */
+
+    .result-card {
+        background: white;
+        border-radius: 18px;
+        padding: 45px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .result-card h2 {
+        color: #334155;
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+
+    /* Risk Icon */
+
+    .risk-icon {
+        font-size: 55px;
+        margin-bottom: 15px;
+    }
+
+
+    /* Risk Label */
+
+    .risk-label {
+        color: #64748b;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+
+    /* Risk Level */
+
+    .risk-level {
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    .high {
+        color: #dc2626;
+    }
+
+    .moderate {
+        color: #f59e0b;
+    }
+
+    .low {
+        color: #16a34a;
+    }
+
+
+    /* Confidence */
+
+    .confidence-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 18px;
+        margin: 0 auto 25px;
+        max-width: 400px;
+    }
+
+    .confidence-title {
+        color: #64748b;
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    .confidence-value {
+        color: #1e293b;
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+
+    /* Message */
+
+    .result-message {
+        color: #475569;
+        font-size: 15px;
+        line-height: 1.6;
+        max-width: 600px;
+        margin: 0 auto 30px;
+    }
+
+
+    /* Button */
+
+    .check-again {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        background: #2563eb;
+        color: white;
+        text-decoration: none;
+        border-radius: 9px;
+        font-size: 16px;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    .check-again:hover {
+        background: #1d4ed8;
+    }
+
+
+    /* Responsive */
+
+    @media (max-width: 600px) {
+
+        body {
+            padding: 25px 15px;
+        }
+
+        .header h1 {
+            font-size: 27px;
+        }
+
+        .result-card {
+            padding: 30px 20px;
+        }
+
+        .risk-level {
+            font-size: 34px;
+        }
+
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+
+    <div class="header">
+
+        <h1>Screen-Time Risk Analysis</h1>
+
+        <p>
+            Your screen-usage risk assessment is ready
+        </p>
+
+    </div>
+
+
+    <!-- Result Card -->
+
+    <div class="result-card">
+
+        <h2>Prediction Result</h2>
+
+
+        <!-- Risk Icon -->
+
+        <div class="risk-icon">
+
+            {% if prediction == 'High' %}
+                ⚠️
+            {% elif prediction == 'Moderate' %}
+                ⚡
+            {% else %}
+                ✓
+            {% endif %}
+
+        </div>
+
+
+        <!-- Risk Level -->
+
+        <div class="risk-label">
+            Predicted Risk Level
+        </div>
+
+        <div class="risk-level
+            {% if prediction == 'High' %}
+                high
+            {% elif prediction == 'Moderate' %}
+                moderate
+            {% else %}
+                low
+            {% endif %}
+        ">
+
+            {{ prediction }}
+
+        </div>
+
+
+        <!-- Confidence -->
+
+        <div class="confidence-box">
+
+            <div class="confidence-title">
+                Model Confidence
+            </div>
+
+            <div class="confidence-value">
+                {{ confidence }}%
+            </div>
+
+        </div>
+
+
+        <!-- Result Message -->
+
+        <div class="result-message">
+
+            {% if prediction == 'High' %}
+
+                Your current screen-usage pattern shows a
+                high-risk level. Consider reducing unnecessary
+                screen usage and maintaining healthier digital habits.
+
+            {% elif prediction == 'Moderate' %}
+
+                Your current screen-usage pattern shows a
+                moderate-risk level. Consider monitoring your
+                screen time and maintaining balanced digital habits.
+
+            {% else %}
+
+                Your current screen-usage pattern shows a
+                low-risk level. Keep maintaining a balanced
+                and healthy screen-use routine.
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Check Again -->
+
+        <a href="/prediction" class="check-again">
+            Check Again
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

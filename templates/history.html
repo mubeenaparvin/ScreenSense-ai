@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Prediction History | ScreenSense AI</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f8f4f5;
+        color: #1f2937;
+        min-height: 100vh;
+    }
+
+    /* Header */
+
+    .header {
+        background: #6b1e2b;
+        color: white;
+        padding: 22px 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .welcome {
+        font-size: 14px;
+        opacity: 0.95;
+    }
+
+    .logout {
+        text-decoration: none;
+        color: white;
+        border: 1px solid rgba(255,255,255,0.6);
+        padding: 8px 16px;
+        border-radius: 7px;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+
+    .logout:hover {
+        background: white;
+        color: #6b1e2b;
+    }
+
+    /* Main */
+
+    .container {
+        max-width: 1200px;
+        margin: 45px auto;
+        padding: 0 25px;
+    }
+
+    .page-title {
+        margin-bottom: 28px;
+    }
+
+    .page-title h1 {
+        color: #6b1e2b;
+        font-size: 32px;
+        margin-bottom: 8px;
+    }
+
+    .page-title p {
+        color: #64748b;
+        font-size: 15px;
+    }
+
+    /* Card */
+
+    .history-card {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+        border: 1px solid #eee3e5;
+        overflow-x: auto;
+    }
+
+    /* Table */
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 800px;
+    }
+
+    th {
+        background: #6b1e2b;
+        color: white;
+        padding: 15px 12px;
+        text-align: left;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    th:first-child {
+        border-radius: 8px 0 0 8px;
+    }
+
+    th:last-child {
+        border-radius: 0 8px 8px 0;
+    }
+
+    td {
+        padding: 15px 12px;
+        border-bottom: 1px solid #eee5e7;
+        font-size: 14px;
+        color: #475569;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    tr:hover td {
+        background: #fcf7f8;
+    }
+
+    /* Risk badges */
+
+    .risk-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .high {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    .moderate {
+        background: #fef3c7;
+        color: #b45309;
+    }
+
+    .low {
+        background: #dcfce7;
+        color: #15803d;
+    }
+
+    /* Empty state */
+
+    .empty {
+        text-align: center;
+        padding: 55px 20px;
+        color: #64748b;
+    }
+
+    .empty-icon {
+        font-size: 45px;
+        margin-bottom: 15px;
+    }
+
+    .empty h3 {
+        color: #334155;
+        margin-bottom: 8px;
+        font-size: 20px;
+    }
+
+    .empty p {
+        font-size: 14px;
+    }
+
+    /* Back button */
+
+    .back-button {
+        display: inline-block;
+        margin-top: 25px;
+        padding: 12px 22px;
+        background: #6b1e2b;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    .back-button:hover {
+        background: #541722;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 700px) {
+
+        .header {
+            padding: 18px 20px;
+        }
+
+        .logo {
+            font-size: 20px;
+        }
+
+        .welcome {
+            display: none;
+        }
+
+        .container {
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        .page-title h1 {
+            font-size: 27px;
+        }
+
+        .history-card {
+            padding: 15px;
+        }
+
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+<!-- Header -->
+
+<header class="header">
+
+    <div class="logo">
+        ScreenSense AI
+    </div>
+
+    <div class="header-right">
+
+        {% if name %}
+        <span class="welcome">
+            Welcome, {{ name }}
+        </span>
+        {% endif %}
+
+        <a href="{{ url_for('logout') }}" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- Main Content -->
+
+<main class="container">
+
+    <div class="page-title">
+
+        <h1>Prediction History</h1>
+
+        <p>
+            View your previous screen-time risk predictions.
+        </p>
+
+    </div>
+
+
+    <div class="history-card">
+
+        {% if history %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Date</th>
+                    <th>Screen Time</th>
+                    <th>Social Media</th>
+                    <th>Gaming</th>
+                    <th>Night Usage</th>
+                    <th>Weekend Usage</th>
+                    <th>Risk Level</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for row in history %}
+
+                <tr>
+
+                    <td>
+                        {{ row['prediction_date'] }}
+                    </td>
+
+                    <td>
+                        {{ row['daily_screen_time'] }} hrs
+                    </td>
+
+                    <td>
+                        {{ row['social_media_time'] }} hrs
+                    </td>
+
+                    <td>
+                        {{ row['gaming_time'] }} hrs
+                    </td>
+
+                    <td>
+                        {{ row['night_screen_time'] }} hrs
+                    </td>
+
+                    <td>
+                        {{ row['weekend_screen_time'] }} hrs
+                    </td>
+
+                    <td>
+
+                        {% if row['risk_level'] == 'High' %}
+
+                            <span class="risk-badge high">
+                                High
+                            </span>
+
+                        {% elif row['risk_level'] == 'Moderate' %}
+
+                            <span class="risk-badge moderate">
+                                Moderate
+                            </span>
+
+                        {% else %}
+
+                            <span class="risk-badge low">
+                                Low
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                📊
+            </div>
+
+            <h3>No Prediction History</h3>
+
+            <p>
+                Your previous predictions will appear here after you make a prediction.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Back to Dashboard -->
+
+    <a href="{{ url_for('dashboard') }}" class="back-button">
+        ← Back to Dashboard
+    </a>
+
+</main>
+
+</body>
+
+</html>

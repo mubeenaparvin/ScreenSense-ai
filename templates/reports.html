@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Screen-Time Reports</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f3f5;
+            color: #2d2025;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        /* HEADER */
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #641333;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #777;
+            font-size: 15px;
+        }
+
+        /* REPORT CARD */
+
+        .report-card {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .report-card h2 {
+            color: #641333;
+            margin-bottom: 10px;
+            font-size: 21px;
+        }
+
+        .report-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* INFO GRID */
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .info-box {
+            background: #faf7f8;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 22px;
+            text-align: center;
+        }
+
+        .info-box h3 {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .info-box .value {
+            color: #641333;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* REPORT DETAILS */
+
+        .details {
+            margin-top: 25px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #666;
+        }
+
+        .detail-value {
+            font-weight: bold;
+            color: #641333;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .download {
+            background: #641333;
+            color: white;
+        }
+
+        .download:hover {
+            background: #4d0e26;
+        }
+
+        .back {
+            background: #eee7ea;
+            color: #641333;
+        }
+
+        .back:hover {
+            background: #e2d8dc;
+        }
+
+        /* NOTE */
+
+        .note {
+            background: #faf7f8;
+            border-left: 4px solid #641333;
+            padding: 18px;
+            border-radius: 8px;
+            color: #666;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>Screen-Time Reports</h1>
+
+        <p>
+            View a summary of your screen-time activity and prediction results.
+        </p>
+
+    </div>
+
+
+    <!-- REPORT SUMMARY -->
+
+    <div class="report-card">
+
+        <h2>📄 Personal Screen-Time Report</h2>
+
+        <p>
+            This report provides a summary of your recorded screen-time
+            measurements and risk predictions.
+        </p>
+
+
+        <!-- SUMMARY -->
+
+        <div class="info-grid">
+
+            <div class="info-box">
+
+                <h3>Total Predictions</h3>
+
+                <div class="value">
+                    {{ total_predictions }}
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <h3>Average Screen Time</h3>
+
+                <div class="value">
+                    {{ avg_screen_time }} hrs
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <h3>Latest Risk Level</h3>
+
+                <div class="value">
+                    {{ risk_level }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DETAILS -->
+
+        <div class="details">
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Highest Screen Time
+                </span>
+
+                <span class="detail-value">
+                    {{ max_screen_time }} hrs
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Lowest Screen Time
+                </span>
+
+                <span class="detail-value">
+                    {{ min_screen_time }} hrs
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    High Risk Predictions
+                </span>
+
+                <span class="detail-value">
+                    {{ high_risk }}
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Moderate Risk Predictions
+                </span>
+
+                <span class="detail-value">
+                    {{ moderate_risk }}
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Low Risk Predictions
+                </span>
+
+                <span class="detail-value">
+                    {{ low_risk }}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="buttons">
+
+            <a href="{{ url_for('dashboard') }}" class="button back">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- NOTE -->
+
+    <div class="report-card">
+
+        <div class="note">
+
+            💡 <strong>About this report:</strong>
+
+            The report is generated from your recorded ScreenSense AI
+            predictions. It helps you review your screen-time usage and
+            prediction history in one place.
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

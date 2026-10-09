@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Settings | ScreenSense AI</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f8f4f5;
+        color: #1f2937;
+        min-height: 100vh;
+    }
+
+    /* Header */
+
+    .header {
+        background: #6b1e2b;
+        color: white;
+        padding: 22px 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .welcome {
+        font-size: 14px;
+    }
+
+    .logout {
+        text-decoration: none;
+        color: white;
+        border: 1px solid rgba(255,255,255,0.6);
+        padding: 8px 16px;
+        border-radius: 7px;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+
+    .logout:hover {
+        background: white;
+        color: #6b1e2b;
+    }
+
+    /* Main */
+
+    .container {
+        max-width: 950px;
+        margin: 45px auto;
+        padding: 0 25px;
+    }
+
+    .page-title {
+        margin-bottom: 28px;
+    }
+
+    .page-title h1 {
+        color: #6b1e2b;
+        font-size: 32px;
+        margin-bottom: 8px;
+    }
+
+    .page-title p {
+        color: #64748b;
+        font-size: 15px;
+    }
+
+    /* Settings Card */
+
+    .settings-card {
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 22px;
+        border: 1px solid #eee3e5;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+    }
+
+    .settings-card h2 {
+        color: #334155;
+        font-size: 20px;
+        margin-bottom: 22px;
+    }
+
+    /* Account Information */
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 0;
+        border-bottom: 1px solid #eee5e7;
+    }
+
+    .info-row:last-child {
+        border-bottom: none;
+    }
+
+    .info-label {
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    .info-value {
+        color: #334155;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    /* Password */
+
+    .password-note {
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .password-button {
+        display: inline-block;
+        text-decoration: none;
+        background: #6b1e2b;
+        color: white;
+        padding: 12px 22px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    .password-button:hover {
+        background: #541722;
+    }
+
+    /* Back Button */
+
+    .back-button {
+        display: inline-block;
+        margin-top: 5px;
+        padding: 12px 22px;
+        background: white;
+        color: #6b1e2b;
+        border: 1px solid #6b1e2b;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    .back-button:hover {
+        background: #6b1e2b;
+        color: white;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 650px) {
+
+        .header {
+            padding: 18px 20px;
+        }
+
+        .logo {
+            font-size: 20px;
+        }
+
+        .welcome {
+            display: none;
+        }
+
+        .container {
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        .page-title h1 {
+            font-size: 27px;
+        }
+
+        .settings-card {
+            padding: 22px;
+        }
+
+        .info-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Header -->
+
+<header class="header">
+
+    <div class="logo">
+        ScreenSense AI
+    </div>
+
+    <div class="header-right">
+
+        {% if name %}
+        <span class="welcome">
+            Welcome, {{ name }}
+        </span>
+        {% endif %}
+
+        <a href="{{ url_for('logout') }}" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- Main Content -->
+
+<main class="container">
+
+    <div class="page-title">
+
+        <h1>Settings</h1>
+
+        <p>
+            Manage your ScreenSense AI account settings.
+        </p>
+
+    </div>
+
+
+    <!-- Account Information -->
+
+    <div class="settings-card">
+
+        <h2>Account Information</h2>
+
+        <div class="info-row">
+
+            <span class="info-label">
+                Name
+            </span>
+
+            <span class="info-value">
+                {{ name }}
+            </span>
+
+        </div>
+
+        <div class="info-row">
+
+            <span class="info-label">
+                Account Status
+            </span>
+
+            <span class="info-value">
+                Active
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Password Section -->
+
+    <div class="settings-card">
+
+        <h2>Security</h2>
+
+        <p class="password-note">
+            Keep your account secure by using a strong password.
+            Password management can be added to your account settings.
+        </p>
+
+        <a href="{{ url_for('change_password') }}" class="password-button">
+            Change Password
+        </a>
+
+    </div>
+
+
+    <!-- Back -->
+
+    <a href="{{ url_for('dashboard') }}" class="back-button">
+        ← Back to Dashboard
+    </a>
+
+</main>
+
+</body>
+
+</html>

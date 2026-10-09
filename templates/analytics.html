@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Screen-Time Analytics</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f3f5;
+            color: #2d2025;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #641333;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #777;
+            font-size: 15px;
+        }
+
+        /* SUMMARY CARDS */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #641333;
+        }
+
+        .card h3 {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .card .value {
+            color: #641333;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        /* MAIN SECTIONS */
+
+        .section {
+            background: white;
+            padding: 28px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .section h2 {
+            color: #641333;
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .section-description {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* STATISTICS */
+
+        .statistics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .stat-box {
+            background: #faf7f8;
+            padding: 22px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+
+        .stat-box h3 {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .stat-box p {
+            color: #641333;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        /* RISK DISTRIBUTION */
+
+        .risk-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .risk-box {
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+
+        .risk-box h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .risk-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #641333;
+        }
+
+        .high {
+            background: #fff2f2;
+        }
+
+        .moderate {
+            background: #fff9ed;
+        }
+
+        .low {
+            background: #f0faf3;
+        }
+
+        /* INSIGHTS */
+
+        .insight {
+            background: #faf7f8;
+            padding: 18px 20px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border-left: 4px solid #641333;
+            color: #444;
+            line-height: 1.6;
+        }
+
+        .insight:last-child {
+            margin-bottom: 0;
+        }
+
+        /* BUTTON */
+
+        .back-button {
+            display: inline-block;
+            margin-top: 5px;
+            padding: 12px 22px;
+            background: #641333;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .back-button:hover {
+            background: #4d0e26;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .statistics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .risk-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            .statistics {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 26px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>Screen-Time Analytics</h1>
+
+        <p>
+            Analyze your screen-time patterns and prediction history.
+        </p>
+
+    </div>
+
+
+    <!-- SUMMARY CARDS -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>Total Predictions</h3>
+
+            <div class="value">
+                {{ total_predictions }}
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Average Screen Time</h3>
+
+            <div class="value">
+                {{ avg_screen_time }} hrs
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Latest Risk Level</h3>
+
+            <div class="value">
+                {{ risk_level }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SCREEN-TIME STATISTICS -->
+
+    <div class="section">
+
+        <h2>📊 Screen-Time Statistics</h2>
+
+        <p class="section-description">
+            A summary of your recorded screen-time measurements.
+        </p>
+
+
+        <div class="statistics">
+
+            <div class="stat-box">
+
+                <h3>Average Screen Time</h3>
+
+                <p>
+                    {{ avg_screen_time }} hrs
+                </p>
+
+            </div>
+
+
+            <div class="stat-box">
+
+                <h3>Highest Screen Time</h3>
+
+                <p>
+                    {{ max_screen_time }} hrs
+                </p>
+
+            </div>
+
+
+            <div class="stat-box">
+
+                <h3>Lowest Screen Time</h3>
+
+                <p>
+                    {{ min_screen_time }} hrs
+                </p>
+
+            </div>
+
+
+            <div class="stat-box">
+
+                <h3>Total Predictions</h3>
+
+                <p>
+                    {{ total_predictions }}
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RISK DISTRIBUTION -->
+
+    <div class="section">
+
+        <h2>🧠 Risk Distribution</h2>
+
+        <p class="section-description">
+            Number of predictions recorded for each risk level.
+        </p>
+
+
+        <div class="risk-container">
+
+            <div class="risk-box high">
+
+                <h3>High Risk</h3>
+
+                <div class="risk-number">
+                    {{ high_risk }}
+                </div>
+
+                <p>Predictions</p>
+
+            </div>
+
+
+            <div class="risk-box moderate">
+
+                <h3>Moderate Risk</h3>
+
+                <div class="risk-number">
+                    {{ moderate_risk }}
+                </div>
+
+                <p>Predictions</p>
+
+            </div>
+
+
+            <div class="risk-box low">
+
+                <h3>Low Risk</h3>
+
+                <div class="risk-number">
+                    {{ low_risk }}
+                </div>
+
+                <p>Predictions</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ANALYTICS INSIGHTS -->
+
+    <div class="section">
+
+        <h2>💡 Analytics Insights</h2>
+
+        <p class="section-description">
+            A simple interpretation of your recorded activity.
+        </p>
+
+
+        <div class="insight">
+
+            📱 <strong>Average Usage:</strong>
+
+            Your average recorded screen time is
+            <strong>{{ avg_screen_time }} hours</strong>
+            per day.
+
+        </div>
+
+
+        <div class="insight">
+
+            📈 <strong>Highest Usage:</strong>
+
+            Your highest recorded screen time is
+            <strong>{{ max_screen_time }} hours</strong>.
+
+        </div>
+
+
+        <div class="insight">
+
+            📉 <strong>Lowest Usage:</strong>
+
+            Your lowest recorded screen time is
+            <strong>{{ min_screen_time }} hours</strong>.
+
+        </div>
+
+
+        <div class="insight">
+
+            🧠 <strong>Latest Risk:</strong>
+
+            Your latest recorded risk level is
+            <strong>{{ risk_level }}</strong>.
+
+        </div>
+
+    </div>
+
+
+    <!-- BACK BUTTON -->
+
+    <a href="{{ url_for('dashboard') }}" class="back-button">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

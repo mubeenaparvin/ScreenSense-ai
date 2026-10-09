@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login - ScreenSense AI</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f8f1f3;
+    }
+
+    .login-container {
+        width: 410px;
+        background: #ffffff;
+        padding: 42px;
+        border-radius: 16px;
+        border: 1px solid #ead6db;
+        box-shadow: 0 12px 35px rgba(100, 19, 51, 0.12);
+    }
+
+    .logo {
+        text-align: center;
+        font-size: 28px;
+        font-weight: 700;
+        color: #641333;
+        margin-bottom: 8px;
+    }
+
+    .logo-icon {
+        font-size: 27px;
+        margin-right: 5px;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #7a6870;
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #3f2931;
+        font-size: 14px;
+    }
+
+    select,
+    input {
+        width: 100%;
+        padding: 13px 14px;
+        border: 1px solid #d8c4ca;
+        border-radius: 8px;
+        font-size: 15px;
+        outline: none;
+        background: #ffffff;
+        color: #33252a;
+        transition: 0.2s ease;
+    }
+
+    select:focus,
+    input:focus {
+        border-color: #8b3046;
+        box-shadow: 0 0 0 3px rgba(139, 48, 70, 0.10);
+    }
+
+    select:hover,
+    input:hover {
+        border-color: #b27a89;
+    }
+
+    .login-btn {
+        width: 100%;
+        padding: 13px;
+        border: none;
+        border-radius: 8px;
+        background: #641333;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 5px;
+        transition: 0.2s ease;
+    }
+
+    .login-btn:hover {
+        background: #4f0f28;
+        transform: translateY(-1px);
+    }
+
+    .error {
+        background: #fbe8eb;
+        color: #a61b36;
+        border: 1px solid #f0c4cc;
+        padding: 11px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .register-link {
+        text-align: center;
+        margin-top: 24px;
+        font-size: 14px;
+        color: #7a6870;
+    }
+
+    .register-link a {
+        color: #641333;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .register-link a:hover {
+        color: #4f0f28;
+        text-decoration: underline;
+    }
+
+    .bottom-line {
+        width: 45px;
+        height: 3px;
+        background: #8b3046;
+        border-radius: 5px;
+        margin: 0 auto 25px;
+    }
+
+    @media (max-width: 480px) {
+
+        body {
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            padding: 32px 25px;
+        }
+
+        .logo {
+            font-size: 25px;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="logo">
+        <span class="logo-icon">🧠</span> ScreenSense AI
+    </div>
+
+    <div class="bottom-line"></div>
+
+    <div class="subtitle">
+        Screen-Time Risk Monitoring System
+    </div>
+
+    {% if message %}
+        <div class="error">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    <form method="POST" action="/login">
+
+        <!-- Account Type -->
+        <div class="form-group">
+            <label for="account_type">
+                Login As
+            </label>
+
+            <select id="account_type" name="account_type">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label for="email">
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+            >
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+            >
+        </div>
+
+        <button type="submit" class="login-btn">
+            Login
+        </button>
+
+    </form>
+
+    <div class="register-link">
+        Don't have an account?
+        <a href="/register">Create Account</a>
+    </div>
+
+</div>
+
+
+</body>
+</html>

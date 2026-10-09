@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard - ScreenSense AI</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f8f5f5;
+    color: #2b1b1b;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar {
+    height: 70px;
+    background: #6b1e2b;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 35px;
+    color: white;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 14px;
+}
+
+.logout {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    padding: 8px 14px;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 7px;
+}
+
+.logout:hover {
+    background: white;
+    color: #6b1e2b;
+}
+
+/* ================= LAYOUT ================= */
+
+.layout {
+    display: flex;
+    min-height: calc(100vh - 70px);
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+    width: 230px;
+    background: white;
+    border-right: 1px solid #eadede;
+    padding: 30px 15px;
+}
+
+.sidebar h3 {
+    font-size: 12px;
+    color: #9b7777;
+    text-transform: uppercase;
+    margin: 0 15px 15px;
+}
+
+.menu {
+    list-style: none;
+}
+
+.menu li {
+    margin-bottom: 7px;
+}
+
+.menu a {
+    display: block;
+    padding: 13px 15px;
+    text-decoration: none;
+    color: #5f4a4a;
+    border-radius: 9px;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.menu a:hover {
+    background: #f5e8ea;
+    color: #6b1e2b;
+}
+
+.menu .active {
+    background: #6b1e2b;
+    color: white;
+}
+
+/* ================= MAIN ================= */
+
+.main {
+    flex: 1;
+    padding: 40px;
+}
+
+.content {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* ================= WELCOME ================= */
+
+.welcome {
+    margin-bottom: 30px;
+}
+
+.welcome h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+    color: #3b2025;
+}
+
+.welcome p {
+    color: #7d6868;
+    font-size: 15px;
+}
+
+/* ================= CARDS ================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid #eadede;
+    box-shadow: 0 4px 15px rgba(80, 20, 30, 0.06);
+}
+
+.card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5e8ea;
+    border-radius: 10px;
+    font-size: 21px;
+}
+
+.card h3 {
+    color: #806b6b;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #6b1e2b;
+}
+
+/* ================= PANELS ================= */
+
+.sections {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
+}
+
+.panel {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid #eadede;
+    box-shadow: 0 4px 15px rgba(80, 20, 30, 0.06);
+}
+
+.panel h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #3b2025;
+}
+
+.chart-container {
+    height: 260px;
+    position: relative;
+}
+
+/* ================= INSIGHTS ================= */
+
+.insight {
+    background: #fbf5f6;
+    padding: 14px;
+    border-radius: 9px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #5f4a4a;
+    border-left: 3px solid #6b1e2b;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 190px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .sections {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #eadede;
+    }
+
+    .menu {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .menu li {
+        margin: 0;
+    }
+
+    .main {
+        padding: 20px;
+    }
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .welcome h1 {
+        font-size: 25px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+<div class="logo">
+    🧠 ScreenSense AI
+</div>
+
+<div class="user-section">
+
+    <span>👤 {{ name }}</span>
+
+    <a href="/logout" class="logout">
+        Logout
+    </a>
+
+</div>
+
+</header>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<h3>Menu</h3>
+
+<ul class="menu">
+
+    <li>
+        <a href="/dashboard" class="active">
+            🏠 Dashboard
+        </a>
+    </li>
+
+    <li>
+        <a href="/prediction">
+            🤖 Prediction
+        </a>
+    </li>
+
+    <li>
+        <a href="/analytics">
+            📊 Analytics
+        </a>
+    </li>
+
+    <li>
+        <a href="/history">
+            📅 History
+        </a>
+    </li>
+
+    <li>
+        <a href="/reports">
+            📄 Reports
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ url_for('settings') }}">
+            ⚙ Settings
+        </a>
+    </li>
+
+</ul>
+
+
+</aside>
+
+<main class="main">
+
+<div class="content">
+
+    <section class="welcome">
+
+        <h1>
+            Welcome back, {{ name }} 👋
+        </h1>
+
+        <p>
+            Monitor your digital wellness and understand your screen-time habits.
+        </p>
+
+    </section>
+
+
+    <section class="cards">
+
+
+        <div class="card">
+
+            <div class="card-top">
+
+                <div>
+
+                    <h3>
+                        Latest Screen Time
+                    </h3>
+
+                    <div class="value">
+                        {{ screen_time }} hrs
+                    </div>
+
+                </div>
+
+                <div class="card-icon">
+                    ⏱️
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-top">
+
+                <div>
+
+                    <h3>
+                        Current Risk Level
+                    </h3>
+
+                    <div class="value">
+                        {{ risk_level }}
+                    </div>
+
+                </div>
+
+                <div class="card-icon">
+                    🧠
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-top">
+
+                <div>
+
+                    <h3>
+                        Total Predictions
+                    </h3>
+
+                    <div class="value">
+                        {{ total_predictions }}
+                    </div>
+
+                </div>
+
+                <div class="card-icon">
+                    📋
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <section class="sections">
+
+
+        <div class="panel">
+
+            <h2>
+                📈 Screen-Time Analytics
+            </h2>
+
+            <div class="chart-container">
+
+                <canvas id="screenTimeChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel">
+
+            <h2>
+                🧠 Wellness Insights
+            </h2>
+
+
+            {% if risk_level == "High" %}
+
+                <div class="insight">
+                    ⚠️ Your latest prediction indicates a high-risk
+                    screen-use pattern.
+                </div>
+
+                <div class="insight">
+                    Consider reducing unnecessary screen usage.
+                </div>
+
+
+            {% elif risk_level == "Moderate" %}
+
+                <div class="insight">
+                    ⚡ Your latest prediction indicates a moderate-risk
+                    screen-use pattern.
+                </div>
+
+                <div class="insight">
+                    Continue monitoring your daily screen usage.
+                </div>
+
+
+            {% elif risk_level == "Low" %}
+
+                <div class="insight">
+                    ✓ Your latest prediction indicates a low-risk
+                    screen-use pattern.
+                </div>
+
+                <div class="insight">
+                    Keep maintaining a balanced digital routine.
+                </div>
+
+
+            {% else %}
+
+                <div class="insight">
+                    Complete a prediction to receive wellness insights.
+                </div>
+
+                <div class="insight">
+                    Your screen-time data will be analyzed here.
+                </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </section>
+
+</div>
+
+
+</main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const dates = JSON.parse('{{ dates | tojson | safe }}');
+
+const screenTimes = JSON.parse('{{ screen_times | tojson | safe }}');
+
+const chart = document.getElementById("screenTimeChart");
+
+
+if (chart && screenTimes.length > 0) {
+
+    new Chart(chart, {
+
+        type: "line",
+
+        data: {
+
+            labels: dates,
+
+            datasets: [
+
+                {
+
+                    label: "Daily Screen Time (hours)",
+
+                    data: screenTimes,
+
+                    borderWidth: 3,
+
+                    tension: 0.3,
+
+                    fill: false
+
+                }
+
+            ]
+
+        },
+
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    title: {
+
+                        display: true,
+
+                        text: "Hours"
+
+                    }
+
+                },
+
+                x: {
+
+                    title: {
+
+                        display: true,
+
+                        text: "Prediction Date"
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>
